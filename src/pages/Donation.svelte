@@ -9,7 +9,8 @@
     amount,
     name,
     email,
-    agree = false, data=getCharity(params.id);
+    agree = false;
+  let data=getCharity(params.id);
 
   async function getCharity(id) {
     const res = await fetch(
@@ -18,7 +19,8 @@
     return res.json();
   }
 
-  async function handleFormSubmit() {
+  async function handleFormSubmit(event) {
+    charity = await data;
     charity.pledged = charity.pledged + parseInt(amount);
     try {
       const res = await fetch(
@@ -31,10 +33,8 @@
           body: JSON.stringify(charity),
         }
       );
-      console.log(res);
       router.redirect("/success");
     } catch (err) {
-      console.log(err);
       router.redirect("/failed");
     }
   }
